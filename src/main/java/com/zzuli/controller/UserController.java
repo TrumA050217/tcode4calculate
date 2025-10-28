@@ -45,7 +45,7 @@ public class UserController {
 
     @Operation(summary = "小程序授权登录")
     @GetMapping("/login/{code}")
-    public Result<String> login(@PathVariable String code) {
+    public Result<String> login4WX(@PathVariable String code) {
         return Result.ok(wxUserService.login(code));
     }
 
