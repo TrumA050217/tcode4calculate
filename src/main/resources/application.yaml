@@ -1,0 +1,51 @@
+# 连接池配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://localhost:3306/calculate
+      username: root
+      password: cd050217
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+# mybatis-plus的配置
+mybatis-plus:
+  type-aliases-package: com.zzuli.pojo
+  global-config:
+    db-config:
+      logic-delete-field: isDeleted   #全局逻辑删除
+      logic-delete-value: 1           # 逻辑已删除值
+      logic-not-delete-value: 0       # 逻辑未删除值
+      id-type: auto #主键策略自增长
+
+server:
+  address: 0.0.0.0
+  port: 8866
+  servlet:
+    context-path: /
+
+# jwt配置
+jwt:
+  token:
+    tokenExpiration: 60000 #有效时间,单位分钟
+    tokenSignKey: tcode123456  #当前程序签名秘钥 自定义
+
+# swagger配置
+springdoc:
+  swagger-ui:
+    enabled: true
+
+
+# 微信小程序配置
+wx:
+  miniapp:
+    appId: ***REMOVED***  # 小程序微信公众平台appId
+    secret: ***REMOVED***  # 小程序微信公众平台api秘钥

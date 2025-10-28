@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzuli.mapper.RecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.zzuli.entity.Record">
+            <id property="recordId" column="record_id" jdbcType="BIGINT"/>
+            <result property="bankId" column="bank_id" jdbcType="BIGINT"/>
+            <result property="operandA" column="operand_a" jdbcType="INTEGER"/>
+            <result property="operandB" column="operand_b" jdbcType="INTEGER"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="correctAnswer" column="correct_answer" jdbcType="DOUBLE"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        record_id,bank_id,operand_a,
+        operand_b,type,correct_answer
+    </sql>
+</mapper>
