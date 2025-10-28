@@ -19,13 +19,6 @@ public interface UserService extends IService<User> {
     String login(UserForm userForm);
 
     /**
-     * 微信一键登录
-     * @param code
-     * @return
-     */
-    String login4WX(String code);
-
-    /**
      *  注册
      * @param userForm
      * @return
