@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class Base {
     private int type;
-    private int a;
-    private int b;
-    private int result;
+    private double a;
+    private double b;
+    private double result;
 }

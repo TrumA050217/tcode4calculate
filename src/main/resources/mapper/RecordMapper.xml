@@ -7,8 +7,8 @@
     <resultMap id="BaseResultMap" type="com.zzuli.entity.Record">
             <id property="recordId" column="record_id" jdbcType="BIGINT"/>
             <result property="bankId" column="bank_id" jdbcType="BIGINT"/>
-            <result property="operandA" column="operand_a" jdbcType="INTEGER"/>
-            <result property="operandB" column="operand_b" jdbcType="INTEGER"/>
+            <result property="operandA" column="operand_a" jdbcType="DOUBLE"/>
+            <result property="operandB" column="operand_b" jdbcType="DOUBLE"/>
             <result property="type" column="type" jdbcType="INTEGER"/>
             <result property="correctAnswer" column="correct_answer" jdbcType="DOUBLE"/>
     </resultMap>

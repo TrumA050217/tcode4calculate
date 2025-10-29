@@ -18,9 +18,9 @@ public class Record implements Serializable {
 
     private Long bankId;
 
-    private Integer operandA;
+    private Double operandA;
 
-    private Integer operandB;
+    private Double operandB;
 
     private Integer type;
 

@@ -12,6 +12,6 @@ import lombok.Data;
 @Data
 public class BaseForm {
     private int type;
-    private int a;
-    private int b;
+    private double a;
+    private double b;
 }

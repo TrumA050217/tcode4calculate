@@ -109,14 +109,29 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
 
 
     private Double execute(Base base) {
-        return switch (base.getType()) {
-            case 0 -> (double) (base.getA() + base.getB());
-            case 1 -> (double) (base.getA() - base.getB());
-            case 2 -> (double) (base.getA() * base.getB());
-            case 3 -> (double) (base.getA() / base.getB());
-            default -> null;
-        };
+        switch (base.getType()) {
+            case 0 -> {
+                return base.getA() + base.getB();
+            }
+            case 1 -> {
+                return base.getA() - base.getB();
+            }
+            case 2 -> {
+                return base.getA() * base.getB();
+            }
+            case 3 -> {
+                if (base.getB() != 0) {
+                    // 除法保留两位小数
+                    return Math.round(base.getA() / base.getB() * 100.0) / 100.0;
+                }
+                return 0.0;
+            }
+            default -> {
+            }
+        }
+        return null;
     }
+
 }
 
 

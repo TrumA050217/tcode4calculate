@@ -11,9 +11,9 @@ import lombok.Data;
  */
 @Data
 public class AnswerForm {
-    private Integer operandA;
+    private Double operandA;
 
-    private Integer operandB;
+    private Double operandB;
 
     private Integer type;
 

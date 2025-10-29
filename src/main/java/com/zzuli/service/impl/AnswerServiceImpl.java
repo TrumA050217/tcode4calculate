@@ -96,7 +96,9 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
         Record firstRecord = recordMapper.selectById(answerDTOList.get(0).getRecordId());
         myResult.setBankId(firstRecord.getBankId());
         myResult.setTotal(answerDTOList.size());
-        myResult.setAccuracy(1.0 * (answerDTOList.size() - errorCount) / answerDTOList.size());
+        // 直接保留两位小数的小数值
+        myResult.setAccuracy(answerDTOList.isEmpty() ? 0.0 :
+                Math.round(100.0 * (answerDTOList.size() - errorCount) / answerDTOList.size()) / 100.0);
         myResultMapper.insert(myResult);
 
         return saveBatch(answerList);

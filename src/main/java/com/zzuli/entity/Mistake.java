@@ -20,9 +20,9 @@ public class Mistake implements Serializable {
 
     private Long recordId;
 
-    private Integer operA;
+    private Double operA;
 
-    private Integer operB;
+    private Double operB;
 
     private Integer mistakeType;
 
