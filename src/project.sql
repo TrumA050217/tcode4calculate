@@ -2,7 +2,8 @@ create table bank
 (
     bank_id    bigint auto_increment comment '题库id'
         primary key,
-    created_at datetime default CURRENT_TIMESTAMP null comment '创建时间'
+    created_at datetime default CURRENT_TIMESTAMP null comment '创建时间',
+    created_by bigint                             null comment '创建人'
 )
     comment '题库';
 
@@ -13,6 +14,7 @@ create table my_result
     bank_id   bigint not null comment '题库id',
     total     int    not null comment '题目总数',
     accuracy  double not null comment '正确率',
+    user_id   bigint null comment '答题用户id',
     constraint my_result_bank_bank_id_fk
         foreign key (bank_id) references bank (bank_id)
 )
@@ -40,6 +42,7 @@ create table answer
     record_id  bigint not null comment '题目id',
     my_answer  double null comment '我的答案',
     is_correct int    not null comment '是否是正确答案？1正确 2错误',
+    user_id    bigint null comment '答题用户id',
     constraint answer_bank_bank_id_fk
         foreign key (bank_id) references bank (bank_id),
     constraint answer_record_record_id_fk
@@ -56,6 +59,7 @@ create table mistake
     oper_a       double not null comment '操作数A',
     oper_b       double not null comment '操作数B',
     mistake_type int    not null comment '错题类型',
+    user_id      bigint null comment '错题本用户id',
     constraint mistake_bank_bank_id_fk
         foreign key (bank_id) references bank (bank_id),
     constraint mistake_record_record_id_fk
@@ -68,16 +72,7 @@ create table user
     user_id  bigint auto_increment comment '用户id'
         primary key,
     username varchar(255) not null comment '用户名',
-    password varchar(255) not null comment '密码'
+    password varchar(255) not null comment '密码',
+    openid   varchar(255) null
 );
-
-create table wx_user
-(
-    wx_user_id bigint auto_increment comment '微信用户id'
-        primary key,
-    openid     varchar(255) not null comment '微信用户openid',
-    constraint wx_user_pk
-        unique (openid)
-)
-    comment '微信登录用户';
 
