@@ -14,6 +14,7 @@ import lombok.Data;
 @TableName(value ="bank")
 @Data
 public class Bank implements Serializable {
+    @TableId(type = IdType.AUTO)
     private Long bankId;
 
     private Date createdAt;

@@ -13,9 +13,10 @@ import lombok.Data;
 @TableName(value ="answer")
 @Data
 public class Answer implements Serializable {
-    private Long bankId;
-
+    @TableId(type = IdType.AUTO)
     private Long answerId;
+
+    private Long bankId;
 
     private Long recordId;
 

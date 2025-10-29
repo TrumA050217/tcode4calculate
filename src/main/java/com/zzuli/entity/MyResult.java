@@ -13,6 +13,7 @@ import lombok.Data;
 @TableName(value ="my_result")
 @Data
 public class MyResult implements Serializable {
+    @TableId(type = IdType.AUTO)
     private Long resultId;
 
     private Long bankId;

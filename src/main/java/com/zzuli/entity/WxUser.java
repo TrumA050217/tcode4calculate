@@ -13,6 +13,7 @@ import lombok.Data;
 @TableName(value ="wx_user")
 @Data
 public class WxUser implements Serializable {
+    @TableId(type = IdType.AUTO)
     private Long wxUserId;
 
     private String openid;
