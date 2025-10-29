@@ -36,7 +36,7 @@ public enum ResultCodeEnum {
     QUESTIONNAIRE_NOT_PUBLIC( 252, "问卷未发布"),
     QUESTIONNAIRE_END( 253, "问卷已结束"),
     OPTION_IS_NOT_EXIST( 254, "选项不存在"),
-    SELECT_NO_OPTION( 255, "未选择选项"),
+    EMPTY_ANSWER( 255, "有题目未作答！"),
     SUBMIT_MORE_THAN_ONE_QUESTIONNAIRE( 256, "不能重复提交问卷"),
     SUBMIT_MORE_THAN_ONE_VOTE( 257, "不能重复提交投票");
 

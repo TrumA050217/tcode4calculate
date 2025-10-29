@@ -8,6 +8,8 @@ import com.zzuli.entity.Mistake;
 import com.zzuli.entity.MyResult;
 import com.zzuli.entity.Record;
 import com.zzuli.enums.AnswerStatusEnum;
+import com.zzuli.enums.ResultCodeEnum;
+import com.zzuli.exception.TcodeException;
 import com.zzuli.form.AnswerForm;
 import com.zzuli.form.MyResultForm;
 import com.zzuli.mapper.AnswerMapper;
@@ -21,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 73831
@@ -68,8 +71,12 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
                 continue; // 抛出异常
             }
 
-            // 判断答案是否正确
-            if (!answerDTO.getMyAnswer().equals(record.getCorrectAnswer())) {
+            if (answerDTO.getMyAnswer() == null) {
+                throw new TcodeException(ResultCodeEnum.EMPTY_ANSWER);
+            }
+
+            // 判断答案是否正确 - 改进版本
+            if (!Objects.equals(answerDTO.getMyAnswer(), record.getCorrectAnswer())) {
                 // 错题处理
                 Mistake mistake = new Mistake();
                 mistake.setBankId(record.getBankId());
@@ -83,6 +90,7 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
                 errorCount++;
                 isCorrect = false;
             }
+
 
             // 设置用户答案
             answer.setIsCorrect(isCorrect ? AnswerStatusEnum.RIGHT.getValue() : AnswerStatusEnum.WRONG.getValue());

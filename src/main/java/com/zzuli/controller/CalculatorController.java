@@ -42,9 +42,6 @@ public class CalculatorController {
     @Autowired
     private AnswerService answerService;
 
-    @Autowired
-    private JwtHelper jwtHelper;
-
     @Operation(summary = "生成题库")
     @GetMapping("/generate")
     @Check
@@ -88,7 +85,7 @@ public class CalculatorController {
     public Result<Boolean> submit(@RequestBody List<AnswerDTO> answerDTOList) {
         Long userId = AuthContextHolder.getUserId();
         Boolean success = answerService.submit(answerDTOList, userId);
-        return success ? Result.ok() : Result.fail();
+        return success ? Result.ok(true) : Result.fail();
     }
 
     @Operation(summary = "查询用户作答结果")
