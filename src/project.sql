@@ -23,8 +23,8 @@ create table record
     record_id      bigint auto_increment comment '记录id'
         primary key,
     bank_id        bigint not null comment '关联题库id',
-    operand_a      int    not null comment '操作数A',
-    operand_b      int    not null comment '操作数B',
+    operand_a      double not null comment '操作数A',
+    operand_b      double not null comment '操作数B',
     type           int    not null comment '题目类型',
     correct_answer double not null comment '正确答案',
     constraint record_bank_bank_id_fk
@@ -53,8 +53,8 @@ create table mistake
         primary key,
     bank_id      bigint not null comment '题库id',
     record_id    bigint not null comment '错题id',
-    oper_a       int    not null comment '操作数A',
-    oper_b       int    not null comment '操作数B',
+    oper_a       double not null comment '操作数A',
+    oper_b       double not null comment '操作数B',
     mistake_type int    not null comment '错题类型',
     constraint mistake_bank_bank_id_fk
         foreign key (bank_id) references bank (bank_id),
