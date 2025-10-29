@@ -1,12 +1,15 @@
 package com.zzuli.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzuli.entity.Base;
 import com.zzuli.entity.Record;
 import com.zzuli.enums.TypeEnum;
+import com.zzuli.form.BaseForm;
 import com.zzuli.form.RecordForm;
 import com.zzuli.mapper.RecordMapper;
 import com.zzuli.service.RecordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,8 @@ import java.util.Random;
 public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
         implements RecordService {
 
+    @Autowired
+    private RecordMapper recordMapper;
 
     /**
      * 生成题目
@@ -44,6 +49,29 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
         }
         return this.saveBatch(recordList);
     }
+
+    /**
+     * 查询题库获取题目列表
+     *
+     * @param bankId
+     * @return
+     */
+    @Override
+    public List<BaseForm> get(Long bankId) {
+        LambdaQueryWrapper<Record> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Record::getBankId, bankId);
+        List<Record> recordList = recordMapper.selectList(queryWrapper);
+        List<BaseForm> baseFormList = new ArrayList<>();
+        for (Record record : recordList) {
+            BaseForm baseForm = new BaseForm();
+            baseForm.setA(record.getOperandA());
+            baseForm.setB(record.getOperandB());
+            baseForm.setType(record.getType());
+            baseFormList.add(baseForm);
+        }
+        return baseFormList;
+    }
+
 
     private void saveQuestionList(Integer type, Integer quantity, List<Record> recordList, Long bankId) {
         RecordForm recordForm = generateQuestion(type, quantity);

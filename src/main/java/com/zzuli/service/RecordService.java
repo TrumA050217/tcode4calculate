@@ -1,7 +1,11 @@
 package com.zzuli.service;
 
+import com.zzuli.entity.Base;
 import com.zzuli.entity.Record;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zzuli.form.BaseForm;
+
+import java.util.List;
 
 /**
 * @author 73831
@@ -17,4 +21,11 @@ public interface RecordService extends IService<Record> {
      * @return
      */
     Boolean generate(Long bankId, Integer type, Integer quantity);
+
+    /**
+     * 查询题库获取题目列表
+     * @param bankId
+     * @return
+     */
+    List<BaseForm> get(Long bankId);
 }

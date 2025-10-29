@@ -4,8 +4,11 @@ package com.zzuli.controller;
 import com.zzuli.annotation.Check;
 import com.zzuli.dto.AnswerDTO;
 import com.zzuli.entity.Bank;
+import com.zzuli.entity.Base;
 import com.zzuli.form.AnswerForm;
+import com.zzuli.form.BaseForm;
 import com.zzuli.form.MyResultForm;
+import com.zzuli.form.RecordForm;
 import com.zzuli.service.AnswerService;
 import com.zzuli.service.BankService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -56,7 +59,15 @@ public class CalculatorController {
     @Check
     public Result<Boolean> generate(@RequestParam Long bankId, @RequestParam Integer type, @RequestParam Integer quantity) {
         Boolean success = recordService.generate(bankId, type, quantity);
-        return success ? Result.ok() : Result.fail();
+        return success ? Result.ok(true) : Result.fail();
+    }
+
+    @Operation(summary = "查询题库")
+    @GetMapping("/get")
+    @Check
+    public Result<List<BaseForm>> get(@RequestParam Long bankId) {
+        List<BaseForm> baseList = recordService.get(bankId);
+        return Result.ok(baseList);
     }
 
     @Operation(summary = "作答题目")

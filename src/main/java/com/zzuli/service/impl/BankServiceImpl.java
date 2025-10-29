@@ -2,9 +2,13 @@ package com.zzuli.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzuli.entity.Bank;
+import com.zzuli.entity.Base;
 import com.zzuli.service.BankService;
 import com.zzuli.mapper.BankMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author 73831
@@ -14,7 +18,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class BankServiceImpl extends ServiceImpl<BankMapper, Bank>
     implements BankService{
-
 }
 
 

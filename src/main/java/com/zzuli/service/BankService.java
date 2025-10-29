@@ -2,6 +2,9 @@ package com.zzuli.service;
 
 import com.zzuli.entity.Bank;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zzuli.entity.Base;
+
+import java.util.List;
 
 /**
 * @author 73831
@@ -9,5 +12,4 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2025-10-27 17:40:32
 */
 public interface BankService extends IService<Bank> {
-
 }
