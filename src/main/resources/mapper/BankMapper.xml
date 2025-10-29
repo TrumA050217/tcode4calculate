@@ -6,10 +6,11 @@
 
     <resultMap id="BaseResultMap" type="com.zzuli.entity.Bank">
             <id property="bankId" column="bank_id" jdbcType="BIGINT"/>
+            <result property="createdBy" column="created_by" jdbcType="BIGINT"/>
             <result property="createdAt" column="created_at" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        bank_id,created_at
+        bank_id,created_by,created_at
     </sql>
 </mapper>

@@ -8,9 +8,10 @@
             <id property="userId" column="user_id" jdbcType="BIGINT"/>
             <result property="username" column="username" jdbcType="VARCHAR"/>
             <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="openid" column="openid" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        user_id,username,password
+        user_id,openid,username,password
     </sql>
 </mapper>

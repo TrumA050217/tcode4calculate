@@ -20,7 +20,7 @@ public interface AnswerService extends IService<Answer> {
      * @param answerDTOList
      * @return
      */
-    Boolean submit(List<AnswerDTO> answerDTOList);
+    Boolean submit(List<AnswerDTO> answerDTOList, Long userId);
 
     /**
      * 查询用户作答结果

@@ -4,20 +4,18 @@ package com.zzuli.controller;
 import com.zzuli.annotation.Check;
 import com.zzuli.dto.AnswerDTO;
 import com.zzuli.entity.Bank;
-import com.zzuli.entity.Base;
-import com.zzuli.form.AnswerForm;
-import com.zzuli.form.BaseForm;
-import com.zzuli.form.MyResultForm;
-import com.zzuli.form.RecordForm;
+import com.zzuli.form.*;
 import com.zzuli.service.AnswerService;
 import com.zzuli.service.BankService;
+import com.zzuli.service.RecordService;
+import com.zzuli.util.AuthContextHolder;
+import com.zzuli.util.JwtHelper;
+import com.zzuli.util.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.zzuli.util.Result;
-import com.zzuli.service.RecordService;
 
 import java.util.Date;
 import java.util.List;
@@ -44,11 +42,16 @@ public class CalculatorController {
     @Autowired
     private AnswerService answerService;
 
+    @Autowired
+    private JwtHelper jwtHelper;
+
     @Operation(summary = "生成题库")
     @GetMapping("/generate")
     @Check
     public Result<Long> generateBank() {
+        Long userId = AuthContextHolder.getUserId();
         Bank bank = new Bank();
+        bank.setCreatedBy(userId);
         bank.setCreatedAt(new Date());
         bankService.save(bank);
         return Result.ok(bank.getBankId());
@@ -62,7 +65,16 @@ public class CalculatorController {
         return success ? Result.ok(true) : Result.fail();
     }
 
-    @Operation(summary = "查询题库")
+    @Operation(summary = "查询用户生成的题库")
+    @GetMapping("/getMyBank")
+    @Check
+    public Result<List<BankForm>> getMyBank() {
+        Long userId = AuthContextHolder.getUserId();
+        List<BankForm> recordForms = recordService.getMyBank(userId);
+        return Result.ok(recordForms);
+    }
+
+    @Operation(summary = "查询题库中的题目")
     @GetMapping("/get")
     @Check
     public Result<List<BaseForm>> get(@RequestParam Long bankId) {
@@ -74,7 +86,8 @@ public class CalculatorController {
     @PostMapping("/submit")
     @Check
     public Result<Boolean> submit(@RequestBody List<AnswerDTO> answerDTOList) {
-        Boolean success = answerService.submit(answerDTOList);
+        Long userId = AuthContextHolder.getUserId();
+        Boolean success = answerService.submit(answerDTOList, userId);
         return success ? Result.ok() : Result.fail();
     }
 
@@ -92,6 +105,24 @@ public class CalculatorController {
     public Result<List<MyResultForm>> getResultAccuracy(@RequestParam Long bankId) {
         List<MyResultForm> answers = answerService.getResultAccuracy(bankId);
         return Result.ok(answers);
+    }
+
+    @Operation(summary = "查询用户历史作答记录")
+    @GetMapping("/all")
+    @Check
+    public Result<List<AnswerForm>> getAll() {
+        Long userId = AuthContextHolder.getUserId();
+        List<AnswerForm> recordForms = recordService.getAll(userId);
+        return Result.ok(recordForms);
+    }
+
+    @Operation(summary = "查询用户错题本")
+    @GetMapping("/wrong")
+    @Check
+    public Result<List<MistakeForm>> getWrong() {
+        Long userId = AuthContextHolder.getUserId();
+        List<MistakeForm> recordForms = recordService.getWrong(userId);
+        return Result.ok(recordForms);
     }
 
 }

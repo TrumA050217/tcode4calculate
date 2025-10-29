@@ -51,7 +51,7 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
      */
     @Override
     @Transactional
-    public Boolean submit(List<AnswerDTO> answerDTOList) {
+    public Boolean submit(List<AnswerDTO> answerDTOList, Long userId) {
         if (answerDTOList == null || answerDTOList.isEmpty()) {
             return true;
         }
@@ -77,6 +77,7 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
                 mistake.setOperA(record.getOperandA());
                 mistake.setOperB(record.getOperandB());
                 mistake.setMistakeType(record.getType());
+                mistake.setUserId(userId);
                 mistakeMapper.insert(mistake);
 
                 errorCount++;
@@ -88,6 +89,7 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
             answer.setBankId(record.getBankId());
             answer.setRecordId(answerDTO.getRecordId());
             answer.setMyAnswer(answerDTO.getMyAnswer());
+            answer.setUserId(userId);
             answerList.add(answer);
         }
 
@@ -96,6 +98,7 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
         Record firstRecord = recordMapper.selectById(answerDTOList.get(0).getRecordId());
         myResult.setBankId(firstRecord.getBankId());
         myResult.setTotal(answerDTOList.size());
+        myResult.setUserId(userId);
         // 直接保留两位小数的小数值
         myResult.setAccuracy(answerDTOList.isEmpty() ? 0.0 :
                 Math.round(100.0 * (answerDTOList.size() - errorCount) / answerDTOList.size()) / 100.0);

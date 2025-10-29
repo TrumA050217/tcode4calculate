@@ -3,7 +3,6 @@ package com.zzuli.controller;
 import com.zzuli.enums.ResultCodeEnum;
 import com.zzuli.form.UserForm;
 import com.zzuli.service.UserService;
-import com.zzuli.service.WxUserService;
 import com.zzuli.util.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,9 +25,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private WxUserService wxUserService;
-
     @Operation(summary = "用户登录")
     @PostMapping("/login")
     public Result<String> login(@RequestBody UserForm userForm) {
@@ -46,7 +42,7 @@ public class UserController {
     @Operation(summary = "小程序授权登录")
     @GetMapping("/login/{code}")
     public Result<String> login4WX(@PathVariable String code) {
-        return Result.ok(wxUserService.login(code));
+        return Result.ok(userService.login4WX(code));
     }
 
 }

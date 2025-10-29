@@ -3,7 +3,7 @@ package com.zzuli.service;
 import com.zzuli.entity.Base;
 import com.zzuli.entity.Record;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zzuli.form.BaseForm;
+import com.zzuli.form.*;
 
 import java.util.List;
 
@@ -28,4 +28,25 @@ public interface RecordService extends IService<Record> {
      * @return
      */
     List<BaseForm> get(Long bankId);
+
+    /**
+     * 查询用户生成的题库
+     * @param userId
+     * @return
+     */
+    List<BankForm> getMyBank(Long userId);
+
+    /**
+     * 查询所有作答记录
+     * @param userId
+     * @return
+     */
+    List<AnswerForm> getAll(Long userId);
+
+    /**
+     * 查询用户错题本
+     * @param userId
+     * @return
+     */
+    List<MistakeForm> getWrong(Long userId);
 }

@@ -2,12 +2,11 @@ package com.zzuli.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zzuli.entity.Base;
+import com.zzuli.entity.*;
 import com.zzuli.entity.Record;
 import com.zzuli.enums.TypeEnum;
-import com.zzuli.form.BaseForm;
-import com.zzuli.form.RecordForm;
-import com.zzuli.mapper.RecordMapper;
+import com.zzuli.form.*;
+import com.zzuli.mapper.*;
 import com.zzuli.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +27,18 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
 
     @Autowired
     private RecordMapper recordMapper;
+
+    @Autowired
+    private AnswerMapper answerMapper;
+
+    @Autowired
+    private BankMapper bankMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private MistakeMapper mistakeMapper;
 
     /**
      * 生成题目
@@ -68,6 +79,80 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
             baseFormList.add(baseForm);
         }
         return baseFormList;
+    }
+
+    /**
+     * 查询用户生成的题库
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<BankForm> getMyBank(Long userId) {
+        User user = userMapper.selectById(userId);
+        LambdaQueryWrapper<Bank> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Bank::getCreatedBy, userId);
+        List<Bank> bankList = bankMapper.selectList(queryWrapper);
+        List<BankForm> bankFormList = new ArrayList<>();
+        for (Bank bank : bankList) {
+            BankForm bankForm = new BankForm();
+            bankForm.setBankId(bank.getBankId());
+            bankForm.setCreatedBy(user.getUsername());
+            bankForm.setCreatedAt(bank.getCreatedAt());
+            bankFormList.add(bankForm);
+        }
+
+        return bankFormList;
+    }
+
+
+    /**
+     * 查询所有作答记录
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<AnswerForm> getAll(Long userId) {
+        LambdaQueryWrapper<Answer> answerWrapper = new LambdaQueryWrapper<>();
+        answerWrapper.eq(Answer::getUserId, userId);
+        List<Answer> answerList = answerMapper.selectList(answerWrapper);
+        List<AnswerForm> answerFormList = new ArrayList<>();
+        for (Answer answer : answerList) {
+            LambdaQueryWrapper<Record> recordWrapper = new LambdaQueryWrapper<>();
+            recordWrapper.eq(Record::getRecordId, answer.getRecordId());
+            Record record = recordMapper.selectOne(recordWrapper);
+            AnswerForm answerForm = new AnswerForm();
+            answerForm.setMyAnswer(answer.getMyAnswer());
+            answerForm.setIsCorrect(answer.getIsCorrect());
+            answerForm.setOperandA(record.getOperandA());
+            answerForm.setOperandB(record.getOperandB());
+            answerForm.setType(record.getType());
+            answerFormList.add(answerForm);
+        }
+        return answerFormList;
+    }
+
+    /**
+     * 查询用户错题本
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<MistakeForm> getWrong(Long userId) {
+        LambdaQueryWrapper<Mistake> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Mistake::getUserId, userId);
+        List<Mistake> mistakeList = mistakeMapper.selectList(queryWrapper);
+        List<MistakeForm> mistakeFormList = new ArrayList<>();
+        for (Mistake mistake : mistakeList) {
+            MistakeForm mistakeForm = new MistakeForm();
+            mistakeForm.setOperA(mistake.getOperA());
+            mistakeForm.setOperB(mistake.getOperB());
+            mistakeForm.setMistakeType(mistake.getMistakeType());
+            mistakeFormList.add(mistakeForm);
+        }
+        return mistakeFormList;
     }
 
 

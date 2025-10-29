@@ -11,10 +11,11 @@
             <result property="operA" column="oper_a" jdbcType="INTEGER"/>
             <result property="operB" column="oper_b" jdbcType="INTEGER"/>
             <result property="mistakeType" column="mistake_type" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         mistake_id,bank_id,record_id,oper_a,
-        oper_b,mistake_type
+        oper_b,mistake_type,user_id
     </sql>
 </mapper>

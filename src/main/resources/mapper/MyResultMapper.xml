@@ -9,9 +9,10 @@
             <result property="bankId" column="bank_id" jdbcType="BIGINT"/>
             <result property="total" column="total" jdbcType="INTEGER"/>
             <result property="accuracy" column="accuracy" jdbcType="DOUBLE"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        result_id,bank_id,total,accuracy
+        result_id,bank_id,total,accuracy,user_id
     </sql>
 </mapper>

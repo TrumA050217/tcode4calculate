@@ -17,6 +17,8 @@ public class Bank implements Serializable {
     @TableId(type = IdType.AUTO)
     private Long bankId;
 
+    private Long createdBy;
+
     private Date createdAt;
 
     private static final long serialVersionUID = 1L;

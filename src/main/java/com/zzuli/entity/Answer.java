@@ -24,5 +24,7 @@ public class Answer implements Serializable {
 
     private Integer isCorrect;
 
+    private Long userId;
+
     private static final long serialVersionUID = 1L;
 }

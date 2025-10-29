@@ -22,5 +22,7 @@ public class MyResult implements Serializable {
 
     private Double accuracy;
 
+    private Long userId;
+
     private static final long serialVersionUID = 1L;
 }

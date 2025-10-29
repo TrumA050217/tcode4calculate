@@ -10,9 +10,10 @@
             <result property="recordId" column="record_id" jdbcType="BIGINT"/>
             <result property="myAnswer" column="my_answer" jdbcType="DOUBLE"/>
             <result property="isCorrect" column="is_correct" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        answer_id,bank_id,record_id,my_answer,is_correct
+        answer_id,bank_id,record_id,my_answer,is_correct,user_id
     </sql>
 </mapper>
