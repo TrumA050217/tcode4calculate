@@ -39,10 +39,8 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
     @Override
     @Transactional
     public Boolean generate(Long bankId, Integer type, Integer quantity) {
-        Random random = new Random();
         List<Record> recordList = new ArrayList<>();
         if (type.equals(TypeEnum.MIX.getValue())) {
-            type = random.nextInt(4);
             saveQuestionList(type, quantity, recordList, bankId);
         } else {
             saveQuestionList(type, quantity, recordList, bankId);
@@ -77,7 +75,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
         RecordForm recordForm = generateQuestion(type, quantity);
         for (Base base : recordForm.getBaseList()) {
             Record record = new Record();
-            record.setType(type);
+            record.setType(base.getType());
             record.setOperandA(base.getA());
             record.setOperandB(base.getB());
             record.setCorrectAnswer(execute(base));
@@ -87,21 +85,28 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
     }
 
     private RecordForm generateQuestion(Integer type, Integer quantity) {
+        boolean isMix = type.equals(TypeEnum.MIX.getValue());
         RecordForm recordForm = new RecordForm();
         List<Base> baseList = new ArrayList<>();
+        Random random = new Random();
         for (int i = 0; i < quantity; i++) {
-            Random random = new Random();
+            int thisType;
+            if (isMix) {
+                thisType = random.nextInt(4);
+            } else {
+                thisType = type;
+            }
             Base base = new Base();
-            base.setType(type);
+            base.setType(thisType);
             base.setA(random.nextInt(100));
             base.setB(random.nextInt(100));
             baseList.add(base);
         }
 
         recordForm.setBaseList(baseList);
-
         return recordForm;
     }
+
 
     private Double execute(Base base) {
         return switch (base.getType()) {
