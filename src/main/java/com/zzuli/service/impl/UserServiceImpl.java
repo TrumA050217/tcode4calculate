@@ -116,6 +116,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             user = new User();
             user.setOpenid(openid);
             user.setUsername(String.valueOf(System.currentTimeMillis()));
+            user.setPassword(MD5Util.encrypt("123"));
             userMapper.insert(user);
             log.info("新用户注册成功，openid: {}", openid);
         }

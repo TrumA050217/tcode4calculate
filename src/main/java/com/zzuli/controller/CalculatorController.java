@@ -33,6 +33,7 @@ import java.util.List;
 @CrossOrigin
 @SecurityRequirement(name = "Authorization")
 public class CalculatorController {
+
     @Autowired
     private RecordService recordService;
 
