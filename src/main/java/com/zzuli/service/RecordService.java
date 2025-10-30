@@ -1,5 +1,6 @@
 package com.zzuli.service;
 
+import com.zzuli.dto.RecordDTO;
 import com.zzuli.entity.Base;
 import com.zzuli.entity.Record;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -49,4 +50,13 @@ public interface RecordService extends IService<Record> {
      * @return
      */
     List<MistakeForm> getWrong(Long userId);
+
+    /**
+     * 手动生成题目
+     * @param questionForms
+     * @param bankId
+     * @param quantity
+     * @return
+     */
+    Boolean generateManual(List<RecordDTO> RecordDTOs, Long bankId);
 }

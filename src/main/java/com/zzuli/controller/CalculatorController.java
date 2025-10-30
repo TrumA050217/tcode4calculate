@@ -3,13 +3,13 @@ package com.zzuli.controller;
 
 import com.zzuli.annotation.Check;
 import com.zzuli.dto.AnswerDTO;
+import com.zzuli.dto.RecordDTO;
 import com.zzuli.entity.Bank;
 import com.zzuli.form.*;
 import com.zzuli.service.AnswerService;
 import com.zzuli.service.BankService;
 import com.zzuli.service.RecordService;
 import com.zzuli.util.AuthContextHolder;
-import com.zzuli.util.JwtHelper;
 import com.zzuli.util.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -59,6 +59,14 @@ public class CalculatorController {
     @Check
     public Result<Boolean> generate(@RequestParam Long bankId, @RequestParam Integer type, @RequestParam Integer quantity) {
         Boolean success = recordService.generate(bankId, type, quantity);
+        return success ? Result.ok(true) : Result.fail();
+    }
+
+    @Operation(summary = "手动生成题目")
+    @PostMapping("/manual")
+    @Check
+    public Result<Boolean> generateManual(@RequestBody List<RecordDTO> RecordDTOs, @RequestParam Long bankId) {
+        Boolean success = recordService.generateManual(RecordDTOs, bankId);
         return success ? Result.ok(true) : Result.fail();
     }
 

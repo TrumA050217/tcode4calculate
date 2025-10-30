@@ -2,12 +2,14 @@ package com.zzuli.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zzuli.entity.*;
+import com.zzuli.dto.RecordDTO;
 import com.zzuli.entity.Record;
+import com.zzuli.entity.*;
 import com.zzuli.enums.TypeEnum;
 import com.zzuli.form.*;
 import com.zzuli.mapper.*;
 import com.zzuli.service.RecordService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -153,6 +155,33 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
             mistakeFormList.add(mistakeForm);
         }
         return mistakeFormList;
+    }
+
+    /**
+     * 手动生成题目
+     *
+     * @param RecordDTOs
+     * @param bankId
+     * @return
+     */
+    @Override
+    @Transactional
+    public Boolean generateManual(List<RecordDTO> RecordDTOs, Long bankId) {
+        List<Record> recordList = new ArrayList<>();
+        for (RecordDTO recordDTO : RecordDTOs) {
+            if (recordDTO == null) continue;
+            Record record = new Record();
+            BeanUtils.copyProperties(recordDTO, record);
+            Base base = new Base();
+            base.setType(recordDTO.getType());
+            base.setA(recordDTO.getOperandA());
+            base.setB(recordDTO.getOperandB());
+            Double result = execute(base);
+            record.setCorrectAnswer(result);
+            record.setBankId(bankId);
+            recordList.add(record);
+        }
+        return this.saveBatch(recordList);
     }
 
 
