@@ -65,5 +65,5 @@ public interface RecordService extends IService<Record> {
      * @param userId
      * @return
      */
-    Integer getWrongCount(Long userId);
+    Long getWrongCount(Long userId);
 }

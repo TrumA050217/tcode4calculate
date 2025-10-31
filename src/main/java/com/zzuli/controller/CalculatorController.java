@@ -56,11 +56,43 @@ public class CalculatorController {
         return Result.ok(bank.getBankId());
     }
 
+    @Operation(summary = "删除题库")
+    @DeleteMapping("/delete/bank")
+    @Check
+    public Result<Boolean> deleteBank(@RequestParam Long bankId) {
+        boolean success = bankService.removeById(bankId);
+        return success ? Result.ok(true) : Result.fail();
+    }
+
+    @Operation(summary = "批量删除题库")
+    @DeleteMapping("/delete/banks/batch")
+    @Check
+    public Result<Boolean> deleteBanks(@RequestBody List<Long> bankIds) {
+        boolean success = bankService.removeByIds(bankIds);
+        return success ? Result.ok(true) : Result.fail();
+    }
+
     @Operation(summary = "生成题目")
     @GetMapping("/generate/questions")
     @Check
     public Result<Boolean> generate(@RequestParam Long bankId, @RequestParam Integer type, @RequestParam Integer quantity) {
         Boolean success = recordService.generate(bankId, type, quantity);
+        return success ? Result.ok(true) : Result.fail();
+    }
+
+    @Operation(summary = "删除题目")
+    @DeleteMapping("/delete/question")
+    @Check
+    public Result<Boolean> deleteQuestion(@RequestParam Long questionId) {
+        boolean success = recordService.removeById(questionId);
+        return success ? Result.ok(true) : Result.fail();
+    }
+
+    @Operation(summary = "批量删除题目")
+    @DeleteMapping("/delete/questions/batch")
+    @Check
+    public Result<Boolean> deleteQuestions(@RequestBody List<Long> questionIds) {
+        boolean success = recordService.removeByIds(questionIds);
         return success ? Result.ok(true) : Result.fail();
     }
 
@@ -135,9 +167,9 @@ public class CalculatorController {
     @Operation(summary = "统计错题总数")
     @GetMapping("/wrong/count")
     @Check
-    public Result<Integer> getWrongCount() {
+    public Result<Long> getWrongCount() {
         Long userId = AuthContextHolder.getUserId();
-        Integer count = recordService.getWrongCount(userId);
+        Long count = recordService.getWrongCount(userId);
         return Result.ok(count);
     }
 

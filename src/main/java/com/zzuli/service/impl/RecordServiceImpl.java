@@ -191,10 +191,10 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
      * @return
      */
     @Override
-    public Integer getWrongCount(Long userId) {
+    public Long getWrongCount(Long userId) {
         LambdaQueryWrapper<Mistake> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Mistake::getUserId, userId);
-        return Math.toIntExact(mistakeMapper.selectCount(queryWrapper));
+        return mistakeMapper.selectCount(queryWrapper);
     }
 
 
