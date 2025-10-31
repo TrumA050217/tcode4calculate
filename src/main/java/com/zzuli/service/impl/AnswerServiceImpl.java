@@ -3,19 +3,14 @@ package com.zzuli.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzuli.dto.AnswerDTO;
-import com.zzuli.entity.Answer;
-import com.zzuli.entity.Mistake;
-import com.zzuli.entity.MyResult;
+import com.zzuli.entity.*;
 import com.zzuli.entity.Record;
 import com.zzuli.enums.AnswerStatusEnum;
 import com.zzuli.enums.ResultCodeEnum;
 import com.zzuli.exception.TcodeException;
 import com.zzuli.form.AnswerForm;
 import com.zzuli.form.MyResultForm;
-import com.zzuli.mapper.AnswerMapper;
-import com.zzuli.mapper.MistakeMapper;
-import com.zzuli.mapper.MyResultMapper;
-import com.zzuli.mapper.RecordMapper;
+import com.zzuli.mapper.*;
 import com.zzuli.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +41,9 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
     @Autowired
     private MyResultMapper myResultMapper;
 
+    @Autowired
+    private BankMapper bankMapper;
+
     /**
      * 作答题目
      *
@@ -59,6 +57,8 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
             return true;
         }
 
+        Bank bank = bankMapper.selectById(answerDTOList.get(0).getBankId());
+
         List<Answer> answerList = new ArrayList<>();
         int errorCount = 0;
 
@@ -68,14 +68,14 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
 
             Record record = recordMapper.selectById(answerDTO.getRecordId());
             if (record == null) {
-                continue; // 抛出异常
+                continue;
             }
 
             if (answerDTO.getMyAnswer() == null) {
                 throw new TcodeException(ResultCodeEnum.EMPTY_ANSWER);
             }
 
-            // 判断答案是否正确 - 改进版本
+            // 判断答案是否正确
             if (!Objects.equals(answerDTO.getMyAnswer(), record.getCorrectAnswer())) {
                 // 错题处理
                 Mistake mistake = new Mistake();
@@ -111,7 +111,7 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
         myResult.setAccuracy(answerDTOList.isEmpty() ? 0.0 :
                 Math.round(100.0 * (answerDTOList.size() - errorCount) / answerDTOList.size()) / 100.0);
         myResultMapper.insert(myResult);
-
+        bank.setIsCompleted(1);
         return saveBatch(answerList);
     }
 

@@ -21,5 +21,7 @@ public class Bank implements Serializable {
 
     private Date createdAt;
 
+    private Integer isCompleted;
+
     private static final long serialVersionUID = 1L;
 }
