@@ -18,4 +18,6 @@ public class BankForm {
     private String createdBy;
 
     private Date createdAt;
+
+    private Integer isCompleted;
 }

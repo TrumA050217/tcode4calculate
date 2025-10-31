@@ -101,6 +101,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
             bankForm.setBankId(bank.getBankId());
             bankForm.setCreatedBy(user.getUsername());
             bankForm.setCreatedAt(bank.getCreatedAt());
+            bankForm.setIsCompleted(bank.getIsCompleted());
             bankFormList.add(bankForm);
         }
 
