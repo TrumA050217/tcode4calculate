@@ -27,7 +27,7 @@ import java.util.List;
  * @Time 2025/10/27  10:52
  * @description
  */
-@Tag(name = "计算器接口", description = "提供答卷答案的提交、查询等功能")
+@Tag(name = "计算器接口", description = "提供答卷题目的提交、查询等功能")
 @RestController
 @RequestMapping("/calculate")
 @CrossOrigin
@@ -38,39 +38,7 @@ public class CalculatorController {
     private RecordService recordService;
 
     @Autowired
-    private BankService bankService;
-
-    @Autowired
     private AnswerService answerService;
-
-    @Operation(summary = "生成题库")
-    @GetMapping("/generate")
-    @Check
-    public Result<Long> generateBank() {
-        Long userId = AuthContextHolder.getUserId();
-        Bank bank = new Bank();
-        bank.setCreatedBy(userId);
-        bank.setCreatedAt(new Date());
-        bank.setIsCompleted(0);
-        bankService.save(bank);
-        return Result.ok(bank.getBankId());
-    }
-
-    @Operation(summary = "删除题库")
-    @DeleteMapping("/delete/bank")
-    @Check
-    public Result<Boolean> deleteBank(@RequestParam Long bankId) {
-        boolean success = bankService.removeById(bankId);
-        return success ? Result.ok(true) : Result.fail();
-    }
-
-    @Operation(summary = "批量删除题库")
-    @DeleteMapping("/delete/banks/batch")
-    @Check
-    public Result<Boolean> deleteBanks(@RequestBody List<Long> bankIds) {
-        boolean success = bankService.removeByIds(bankIds);
-        return success ? Result.ok(true) : Result.fail();
-    }
 
     @Operation(summary = "生成题目")
     @GetMapping("/generate/questions")
@@ -104,15 +72,6 @@ public class CalculatorController {
         return success ? Result.ok(true) : Result.fail();
     }
 
-    @Operation(summary = "查询用户生成的题库")
-    @GetMapping("/getMyBank")
-    @Check
-    public Result<List<BankForm>> getMyBank() {
-        Long userId = AuthContextHolder.getUserId();
-        List<BankForm> recordForms = recordService.getMyBank(userId);
-        return Result.ok(recordForms);
-    }
-
     @Operation(summary = "查询题库中的题目")
     @GetMapping("/get")
     @Check
@@ -128,49 +87,6 @@ public class CalculatorController {
         Long userId = AuthContextHolder.getUserId();
         Boolean success = answerService.submit(answerDTOList, userId);
         return success ? Result.ok(true) : Result.fail();
-    }
-
-    @Operation(summary = "查询用户作答结果")
-    @GetMapping("/result")
-    @Check
-    public Result<List<AnswerForm>> result(@RequestParam Long bankId) {
-        List<AnswerForm> answers = answerService.getResult(bankId);
-        return Result.ok(answers);
-    }
-
-    @Operation(summary = "查询用户作答总数量和正确率")
-    @GetMapping("/result/accuracy")
-    @Check
-    public Result<List<MyResultForm>> getResultAccuracy(@RequestParam Long bankId) {
-        List<MyResultForm> answers = answerService.getResultAccuracy(bankId);
-        return Result.ok(answers);
-    }
-
-    @Operation(summary = "查询用户历史作答记录")
-    @GetMapping("/all")
-    @Check
-    public Result<List<AnswerForm>> getAll() {
-        Long userId = AuthContextHolder.getUserId();
-        List<AnswerForm> recordForms = recordService.getAll(userId);
-        return Result.ok(recordForms);
-    }
-
-    @Operation(summary = "查询用户错题本")
-    @GetMapping("/wrong")
-    @Check
-    public Result<List<MistakeForm>> getWrong() {
-        Long userId = AuthContextHolder.getUserId();
-        List<MistakeForm> recordForms = recordService.getWrong(userId);
-        return Result.ok(recordForms);
-    }
-
-    @Operation(summary = "统计错题总数")
-    @GetMapping("/wrong/count")
-    @Check
-    public Result<Long> getWrongCount() {
-        Long userId = AuthContextHolder.getUserId();
-        Long count = recordService.getWrongCount(userId);
-        return Result.ok(count);
     }
 
 }
