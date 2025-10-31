@@ -132,4 +132,13 @@ public class CalculatorController {
         return Result.ok(recordForms);
     }
 
+    @Operation(summary = "统计错题总数")
+    @GetMapping("/wrong/count")
+    @Check
+    public Result<Integer> getWrongCount() {
+        Long userId = AuthContextHolder.getUserId();
+        Integer count = recordService.getWrongCount(userId);
+        return Result.ok(count);
+    }
+
 }

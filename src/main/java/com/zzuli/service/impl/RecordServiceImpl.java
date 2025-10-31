@@ -184,6 +184,19 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
         return this.saveBatch(recordList);
     }
 
+    /**
+     * 统计用户错题数量
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public Integer getWrongCount(Long userId) {
+        LambdaQueryWrapper<Mistake> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Mistake::getUserId, userId);
+        return Math.toIntExact(mistakeMapper.selectCount(queryWrapper));
+    }
+
 
     private void saveQuestionList(Integer type, Integer quantity, List<Record> recordList, Long bankId) {
         RecordForm recordForm = generateQuestion(type, quantity);

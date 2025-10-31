@@ -59,4 +59,11 @@ public interface RecordService extends IService<Record> {
      * @return
      */
     Boolean generateManual(List<RecordDTO> RecordDTOs, Long bankId);
+
+    /**
+     * 统计用户错题数量
+     * @param userId
+     * @return
+     */
+    Integer getWrongCount(Long userId);
 }
