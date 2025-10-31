@@ -4,10 +4,8 @@ package com.zzuli.controller;
 import com.zzuli.annotation.Check;
 import com.zzuli.dto.AnswerDTO;
 import com.zzuli.dto.RecordDTO;
-import com.zzuli.entity.Bank;
 import com.zzuli.form.*;
 import com.zzuli.service.AnswerService;
-import com.zzuli.service.BankService;
 import com.zzuli.service.RecordService;
 import com.zzuli.util.AuthContextHolder;
 import com.zzuli.util.Result;
@@ -17,7 +15,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 /**
