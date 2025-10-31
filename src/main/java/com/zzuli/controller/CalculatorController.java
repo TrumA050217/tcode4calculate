@@ -49,7 +49,7 @@ public class CalculatorController {
     }
 
     @Operation(summary = "删除题目")
-    @DeleteMapping("/delete/question")
+    @DeleteMapping("/delete")
     @Check
     public Result<Boolean> deleteQuestion(@RequestParam Long questionId) {
         boolean success = recordService.removeById(questionId);
@@ -57,7 +57,7 @@ public class CalculatorController {
     }
 
     @Operation(summary = "批量删除题目")
-    @DeleteMapping("/delete/questions/batch")
+    @DeleteMapping("/delete/batch")
     @Check
     public Result<Boolean> deleteQuestions(@RequestBody List<Long> questionIds) {
         boolean success = recordService.removeByIds(questionIds);
