@@ -51,6 +51,7 @@ public class CalculatorController {
         Bank bank = new Bank();
         bank.setCreatedBy(userId);
         bank.setCreatedAt(new Date());
+        bank.setIsCompleted(0);
         bankService.save(bank);
         return Result.ok(bank.getBankId());
     }
