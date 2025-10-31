@@ -23,7 +23,7 @@ import java.util.List;
  * @Time 2025/10/31  12:22
  * @description
  */
-@Tag(name = "题库接口", description = "提供答卷答案的提交、查询等功能")
+@Tag(name = "题库接口", description = "提供题库创建、查询等功能")
 @RestController
 @RequestMapping("/bank")
 @CrossOrigin
