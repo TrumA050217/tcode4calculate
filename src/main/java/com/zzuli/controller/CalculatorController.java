@@ -41,7 +41,7 @@ public class CalculatorController {
     private AnswerService answerService;
 
     @Operation(summary = "生成题目")
-    @GetMapping("/generate/questions")
+    @GetMapping("/generate")
     @Check
     public Result<Boolean> generate(@RequestParam Long bankId, @RequestParam Integer type, @RequestParam Integer quantity) {
         Boolean success = recordService.generate(bankId, type, quantity);
