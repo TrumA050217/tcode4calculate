@@ -3,8 +3,8 @@ package com.zzuli.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zzuli.dto.AnswerDTO;
-import com.zzuli.entity.*;
 import com.zzuli.entity.Record;
+import com.zzuli.entity.*;
 import com.zzuli.enums.AnswerStatusEnum;
 import com.zzuli.enums.ResultCodeEnum;
 import com.zzuli.exception.TcodeException;
@@ -152,27 +152,14 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
      * @return
      */
     @Override
-    public List<MyResultForm> getResultAccuracy(Long bankId) {
-        LambdaQueryWrapper<MyResult> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(MyResult::getBankId, bankId);
-        List<MyResult> myResultList = myResultMapper.selectList(queryWrapper);
+    public MyResultForm getResultAccuracy(Long bankId) {
+        MyResult myResult = myResultMapper.selectById(bankId);
 
-        if (myResultList == null || myResultList.isEmpty()) {
-            return new ArrayList<>(); // 返回空列表而不是null
-        }
+        MyResultForm myResultForm = new MyResultForm();
+        myResultForm.setTotal(myResult.getTotal());
+        myResultForm.setAccuracy(myResult.getAccuracy());
 
-        List<MyResultForm> myResultFormList = new ArrayList<>();
-        for (MyResult myResult : myResultList) {
-            if (myResult == null) {
-                continue;
-            }
-            MyResultForm myResultForm = new MyResultForm();
-            myResultForm.setTotal(myResult.getTotal());
-            myResultForm.setAccuracy(myResult.getAccuracy());
-            myResultFormList.add(myResultForm);
-        }
-
-        return myResultFormList;
+        return myResultForm;
     }
 
 

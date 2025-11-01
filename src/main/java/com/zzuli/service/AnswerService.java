@@ -34,5 +34,5 @@ public interface AnswerService extends IService<Answer> {
      * @param bankId
      * @return
      */
-    List<MyResultForm> getResultAccuracy(Long bankId);
+    MyResultForm getResultAccuracy(Long bankId);
 }

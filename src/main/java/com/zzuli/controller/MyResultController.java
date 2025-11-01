@@ -55,8 +55,8 @@ public class MyResultController {
     @Operation(summary = "查询用户作答总数量和正确率")
     @GetMapping("/accuracy")
     @Check
-    public Result<List<MyResultForm>> getResultAccuracy(@RequestParam Long bankId) {
-        List<MyResultForm> answers = answerService.getResultAccuracy(bankId);
+    public Result<MyResultForm> getResultAccuracy(@RequestParam Long bankId) {
+        MyResultForm answers = answerService.getResultAccuracy(bankId);
         return Result.ok(answers);
     }
 
