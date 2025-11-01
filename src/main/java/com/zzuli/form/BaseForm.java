@@ -11,6 +11,7 @@ import lombok.Data;
  */
 @Data
 public class BaseForm {
+    private Long recordId;
     private int type;
     private double a;
     private double b;

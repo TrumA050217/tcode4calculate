@@ -75,6 +75,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
         List<BaseForm> baseFormList = new ArrayList<>();
         for (Record record : recordList) {
             BaseForm baseForm = new BaseForm();
+            baseForm.setRecordId(record.getRecordId());
             baseForm.setA(record.getOperandA());
             baseForm.setB(record.getOperandB());
             baseForm.setType(record.getType());
