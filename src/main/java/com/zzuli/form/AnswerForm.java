@@ -20,4 +20,6 @@ public class AnswerForm {
     private Double myAnswer;
 
     private Integer isCorrect;
+
+    private Double correctAnswer;
 }

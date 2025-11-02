@@ -140,6 +140,7 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
             answerForm.setType(record.getType());
             answerForm.setMyAnswer(answer.getMyAnswer());
             answerForm.setIsCorrect(answer.getIsCorrect());
+            answerForm.setCorrectAnswer(record.getCorrectAnswer());
             answerFormList.add(answerForm);
         }
 

@@ -218,23 +218,37 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
         RecordForm recordForm = new RecordForm();
         List<Base> baseList = new ArrayList<>();
         Random random = new Random();
+
         for (int i = 0; i < quantity; i++) {
-            int thisType;
-            if (isMix) {
-                thisType = random.nextInt(4);
-            } else {
-                thisType = type;
-            }
             Base base = new Base();
-            base.setType(thisType);
-            base.setA(random.nextInt(100));
-            base.setB(random.nextInt(100));
+            boolean validResult = false;
+
+            // 循环直到生成有效结果
+            while (!validResult) {
+                int thisType;
+                if (isMix) {
+                    thisType = random.nextInt(4);
+                } else {
+                    thisType = type;
+                }
+
+                base.setType(thisType);
+                base.setA(random.nextInt(100));
+                base.setB(random.nextInt(100));
+
+                Double result = execute(base);
+                // 添加除法除数不为零的检查
+                if (result != null && result <= 100 && result >= 0) {
+                    validResult = true;
+                }
+            }
             baseList.add(base);
         }
 
         recordForm.setBaseList(baseList);
         return recordForm;
     }
+
 
 
     private Double execute(Base base) {
