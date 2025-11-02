@@ -18,6 +18,7 @@ public enum ResultCodeEnum {
     UPDATE_ERROR(207, "数据更新失败"),
 
     ARGUMENT_VALID_ERROR(210, "参数校验异常"),
+    NO_RESULT(211, "无作答结果"),
     SIGN_ERROR(300, "签名错误"),
     SIGN_OVERDUE(301, "签名已过期"),
     VERIFICATION_CODE_ERROR(218 , "验证码错误"),

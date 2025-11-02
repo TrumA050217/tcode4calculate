@@ -154,7 +154,9 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
     @Override
     public MyResultForm getResultAccuracy(Long bankId) {
         MyResult myResult = myResultMapper.selectById(bankId);
-
+        if (myResult == null) {
+            throw new TcodeException(ResultCodeEnum.NO_RESULT);
+        }
         MyResultForm myResultForm = new MyResultForm();
         myResultForm.setTotal(myResult.getTotal());
         myResultForm.setAccuracy(myResult.getAccuracy());
