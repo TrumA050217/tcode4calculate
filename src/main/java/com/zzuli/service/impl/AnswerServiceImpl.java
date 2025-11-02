@@ -153,7 +153,9 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
      */
     @Override
     public MyResultForm getResultAccuracy(Long bankId) {
-        MyResult myResult = myResultMapper.selectById(bankId);
+        LambdaQueryWrapper<MyResult> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(MyResult::getBankId, bankId);
+        MyResult myResult = myResultMapper.selectOne(queryWrapper);
         if (myResult == null) {
             throw new TcodeException(ResultCodeEnum.NO_RESULT);
         }
