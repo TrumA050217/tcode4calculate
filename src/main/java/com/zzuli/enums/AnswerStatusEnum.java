@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public enum AnswerStatusEnum {
     RIGHT(1, "正确"),
-    WRONG(2, "错误");
+    WRONG(0, "错误");
 
     private final Integer value;
     private final String message;
