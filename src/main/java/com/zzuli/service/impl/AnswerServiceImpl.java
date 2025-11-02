@@ -112,6 +112,7 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
                 Math.round(100.0 * (answerDTOList.size() - errorCount) / answerDTOList.size()) / 100.0);
         myResultMapper.insert(myResult);
         bank.setIsCompleted(1);
+        bankMapper.updateById(bank);
         return saveBatch(answerList);
     }
 
