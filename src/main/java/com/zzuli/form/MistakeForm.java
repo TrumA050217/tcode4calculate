@@ -16,4 +16,6 @@ public class MistakeForm {
     private Double operB;
 
     private Integer mistakeType;
+
+    private Double correctAnswer;
 }

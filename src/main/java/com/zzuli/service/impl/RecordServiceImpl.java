@@ -151,6 +151,8 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
         List<MistakeForm> mistakeFormList = new ArrayList<>();
         for (Mistake mistake : mistakeList) {
             MistakeForm mistakeForm = new MistakeForm();
+            Record record = recordMapper.selectById(mistake.getRecordId());
+            mistakeForm.setCorrectAnswer(record.getCorrectAnswer());
             mistakeForm.setOperA(mistake.getOperA());
             mistakeForm.setOperB(mistake.getOperB());
             mistakeForm.setMistakeType(mistake.getMistakeType());

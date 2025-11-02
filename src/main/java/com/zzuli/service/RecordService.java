@@ -53,9 +53,8 @@ public interface RecordService extends IService<Record> {
 
     /**
      * 手动生成题目
-     * @param questionForms
+     * @param RecordDTOs
      * @param bankId
-     * @param quantity
      * @return
      */
     Boolean generateManual(List<RecordDTO> RecordDTOs, Long bankId);
