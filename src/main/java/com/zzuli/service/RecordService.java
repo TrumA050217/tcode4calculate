@@ -1,6 +1,6 @@
 package com.zzuli.service;
 
-import com.zzuli.dto.RecordVo;
+import com.zzuli.vo.RecordVo;
 import com.zzuli.entity.Record;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzuli.form.*;

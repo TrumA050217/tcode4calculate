@@ -1,4 +1,4 @@
-package com.zzuli.dto;
+package com.zzuli.vo;
 
 import lombok.Data;
 

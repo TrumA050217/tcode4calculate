@@ -2,8 +2,8 @@ package com.zzuli.controller;
 
 
 import com.zzuli.annotation.Check;
-import com.zzuli.dto.AnswerVo;
-import com.zzuli.dto.RecordVo;
+import com.zzuli.vo.AnswerVo;
+import com.zzuli.vo.RecordVo;
 import com.zzuli.form.*;
 import com.zzuli.service.AnswerService;
 import com.zzuli.service.RecordService;
