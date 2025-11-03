@@ -52,8 +52,8 @@ MyCalculator/
 
 1. 克隆仓库
 ```bash
-git clone https://github.com/yourusername/MyCalculator.git
-cd MyCalculator
+git clone https://github.com/TrumA050217/tcode4calculate.git
+cd tcode4calculate
 ```
 
 2. 配置数据库
@@ -66,7 +66,7 @@ cd MyCalculator
 4. 构建并运行
 ```bash
 mvn clean package
-java -jar target/MyCalculator-0.0.1-SNAPSHOT.jar
+java -jar target/tcode4calculate-0.0.1-SNAPSHOT.jar
 ```
 
 5. 访问接口文档
