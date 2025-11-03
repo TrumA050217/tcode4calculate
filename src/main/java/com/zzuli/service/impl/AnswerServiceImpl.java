@@ -2,7 +2,7 @@ package com.zzuli.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zzuli.dto.AnswerDTO;
+import com.zzuli.dto.AnswerVo;
 import com.zzuli.entity.Record;
 import com.zzuli.entity.*;
 import com.zzuli.enums.AnswerStatusEnum;
@@ -47,40 +47,40 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
     /**
      * 作答题目
      *
-     * @param answerDTOList
+     * @param answerVoList
      * @return
      */
     @Override
     @Transactional
-    public Boolean submit(List<AnswerDTO> answerDTOList, Long userId) {
-        if (answerDTOList == null || answerDTOList.isEmpty()) {
+    public Boolean submit(List<AnswerVo> answerVoList, Long userId) {
+        if (answerVoList == null || answerVoList.isEmpty()) {
             return true;
         }
 
-        Bank bank = bankMapper.selectById(answerDTOList.get(0).getBankId());
+        Bank bank = bankMapper.selectById(answerVoList.get(0).getBankId());
 
         List<Answer> answerList = new ArrayList<>();
         int errorCount = 0;
 
-        for (AnswerDTO answerDTO : answerDTOList) {
+        for (AnswerVo answerVo : answerVoList) {
             boolean isCorrect = true;
             Answer answer = new Answer();
 
-            Record record = recordMapper.selectById(answerDTO.getRecordId());
+            Record record = recordMapper.selectById(answerVo.getRecordId());
             if (record == null) {
                 continue;
             }
 
-            if (answerDTO.getMyAnswer() == null) {
+            if (answerVo.getMyAnswer() == null) {
                 throw new TcodeException(ResultCodeEnum.EMPTY_ANSWER);
             }
 
             // 判断答案是否正确
-            if (!Objects.equals(answerDTO.getMyAnswer(), record.getCorrectAnswer())) {
+            if (!Objects.equals(answerVo.getMyAnswer(), record.getCorrectAnswer())) {
                 // 错题处理
                 Mistake mistake = new Mistake();
                 mistake.setBankId(record.getBankId());
-                mistake.setRecordId(answerDTO.getRecordId());
+                mistake.setRecordId(answerVo.getRecordId());
                 mistake.setOperA(record.getOperandA());
                 mistake.setOperB(record.getOperandB());
                 mistake.setMistakeType(record.getType());
@@ -95,21 +95,21 @@ public class AnswerServiceImpl extends ServiceImpl<AnswerMapper, Answer>
             // 设置用户答案
             answer.setIsCorrect(isCorrect ? AnswerStatusEnum.RIGHT.getValue() : AnswerStatusEnum.WRONG.getValue());
             answer.setBankId(record.getBankId());
-            answer.setRecordId(answerDTO.getRecordId());
-            answer.setMyAnswer(answerDTO.getMyAnswer());
+            answer.setRecordId(answerVo.getRecordId());
+            answer.setMyAnswer(answerVo.getMyAnswer());
             answer.setUserId(userId);
             answerList.add(answer);
         }
 
         // 创建答题结果记录
         MyResult myResult = new MyResult();
-        Record firstRecord = recordMapper.selectById(answerDTOList.get(0).getRecordId());
+        Record firstRecord = recordMapper.selectById(answerVoList.get(0).getRecordId());
         myResult.setBankId(firstRecord.getBankId());
-        myResult.setTotal(answerDTOList.size());
+        myResult.setTotal(answerVoList.size());
         myResult.setUserId(userId);
         // 直接保留两位小数的小数值
-        myResult.setAccuracy(answerDTOList.isEmpty() ? 0.0 :
-                Math.round(100.0 * (answerDTOList.size() - errorCount) / answerDTOList.size()) / 100.0);
+        myResult.setAccuracy(answerVoList.isEmpty() ? 0.0 :
+                Math.round(100.0 * (answerVoList.size() - errorCount) / answerVoList.size()) / 100.0);
         myResultMapper.insert(myResult);
         bank.setIsCompleted(1);
         bankMapper.updateById(bank);

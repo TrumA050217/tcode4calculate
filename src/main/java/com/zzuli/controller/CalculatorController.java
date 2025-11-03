@@ -2,8 +2,8 @@ package com.zzuli.controller;
 
 
 import com.zzuli.annotation.Check;
-import com.zzuli.dto.AnswerDTO;
-import com.zzuli.dto.RecordDTO;
+import com.zzuli.dto.AnswerVo;
+import com.zzuli.dto.RecordVo;
 import com.zzuli.form.*;
 import com.zzuli.service.AnswerService;
 import com.zzuli.service.RecordService;
@@ -64,8 +64,8 @@ public class CalculatorController {
     @Operation(summary = "手动生成题目")
     @PostMapping("/manual")
     @Check
-    public Result<Boolean> generateManual(@RequestBody List<RecordDTO> RecordDTOs, @RequestParam Long bankId) {
-        Boolean success = recordService.generateManual(RecordDTOs, bankId);
+    public Result<Boolean> generateManual(@RequestBody List<RecordVo> recordVos, @RequestParam Long bankId) {
+        Boolean success = recordService.generateManual(recordVos, bankId);
         return success ? Result.ok(true) : Result.fail();
     }
 
@@ -80,9 +80,9 @@ public class CalculatorController {
     @Operation(summary = "作答题目")
     @PostMapping("/submit")
     @Check
-    public Result<Boolean> submit(@RequestBody List<AnswerDTO> answerDTOList) {
+    public Result<Boolean> submit(@RequestBody List<AnswerVo> answerVoList) {
         Long userId = AuthContextHolder.getUserId();
-        Boolean success = answerService.submit(answerDTOList, userId);
+        Boolean success = answerService.submit(answerVoList, userId);
         return success ? Result.ok(true) : Result.fail();
     }
 

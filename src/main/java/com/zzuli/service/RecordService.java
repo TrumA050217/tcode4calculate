@@ -1,7 +1,6 @@
 package com.zzuli.service;
 
-import com.zzuli.dto.RecordDTO;
-import com.zzuli.entity.Base;
+import com.zzuli.dto.RecordVo;
 import com.zzuli.entity.Record;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzuli.form.*;
@@ -53,11 +52,11 @@ public interface RecordService extends IService<Record> {
 
     /**
      * 手动生成题目
-     * @param RecordDTOs
+     * @param recordVos
      * @param bankId
      * @return
      */
-    Boolean generateManual(List<RecordDTO> RecordDTOs, Long bankId);
+    Boolean generateManual(List<RecordVo> recordVos, Long bankId);
 
     /**
      * 统计用户错题数量

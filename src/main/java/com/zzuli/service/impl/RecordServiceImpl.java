@@ -2,7 +2,7 @@ package com.zzuli.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zzuli.dto.RecordDTO;
+import com.zzuli.dto.RecordVo;
 import com.zzuli.entity.Record;
 import com.zzuli.entity.*;
 import com.zzuli.enums.TypeEnum;
@@ -164,22 +164,22 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
     /**
      * 手动生成题目
      *
-     * @param RecordDTOs
+     * @param recordVos
      * @param bankId
      * @return
      */
     @Override
     @Transactional
-    public Boolean generateManual(List<RecordDTO> RecordDTOs, Long bankId) {
+    public Boolean generateManual(List<RecordVo> recordVos, Long bankId) {
         List<Record> recordList = new ArrayList<>();
-        for (RecordDTO recordDTO : RecordDTOs) {
-            if (recordDTO == null) continue;
+        for (RecordVo recordVo : recordVos) {
+            if (recordVo == null) continue;
             Record record = new Record();
-            BeanUtils.copyProperties(recordDTO, record);
+            BeanUtils.copyProperties(recordVo, record);
             Base base = new Base();
-            base.setType(recordDTO.getType());
-            base.setA(recordDTO.getOperandA());
-            base.setB(recordDTO.getOperandB());
+            base.setType(recordVo.getType());
+            base.setA(recordVo.getOperandA());
+            base.setB(recordVo.getOperandB());
             Double result = execute(base);
             record.setCorrectAnswer(result);
             record.setBankId(bankId);

@@ -1,6 +1,6 @@
 package com.zzuli.service;
 
-import com.zzuli.dto.AnswerDTO;
+import com.zzuli.dto.AnswerVo;
 import com.zzuli.entity.Answer;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzuli.form.AnswerForm;
@@ -17,10 +17,10 @@ public interface AnswerService extends IService<Answer> {
 
     /**
      * 作答题目
-     * @param answerDTOList
+     * @param answerVoList
      * @return
      */
-    Boolean submit(List<AnswerDTO> answerDTOList, Long userId);
+    Boolean submit(List<AnswerVo> answerVoList, Long userId);
 
     /**
      * 查询用户作答结果

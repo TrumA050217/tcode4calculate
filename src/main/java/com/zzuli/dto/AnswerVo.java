@@ -10,7 +10,7 @@ import lombok.Data;
  * @description
  */
 @Data
-public class AnswerDTO {
+public class AnswerVo {
     private Long bankId;
 
     private Long recordId;

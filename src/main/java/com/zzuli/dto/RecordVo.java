@@ -10,7 +10,7 @@ import lombok.Data;
  * @description
  */
 @Data
-public class RecordDTO {
+public class RecordVo {
     private Double operandA;
 
     private Double operandB;
