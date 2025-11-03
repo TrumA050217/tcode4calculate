@@ -2,6 +2,8 @@
 
 一款专为小学生设计的算数练习系统，支持生成加减乘除题目、错题记录、答题统计等功能，帮助小学生提升算数能力。
 
+微信小程序端：https://github.com/AOWUkawaii/tcode4calculate-wechat
+
 ## 📋 功能特点
 
 - **用户管理**：支持账号密码登录、微信小程序授权登录
@@ -50,8 +52,8 @@ MyCalculator/
 
 1. 克隆仓库
 ```bash
-git clone https://github.com/yourusername/MyCalculator.git
-cd MyCalculator
+git clone https://github.com/TrumA050217/tcode4calculate.git
+cd tcode4calculate
 ```
 
 2. 配置数据库
@@ -64,7 +66,7 @@ cd MyCalculator
 4. 构建并运行
 ```bash
 mvn clean package
-java -jar target/MyCalculator-0.0.1-SNAPSHOT.jar
+java -jar target/tcode4calculate-0.0.1-SNAPSHOT.jar
 ```
 
 5. 访问接口文档
