@@ -1,9 +1,10 @@
 create table bank
 (
-    bank_id    bigint auto_increment comment '题库id'
+    bank_id      bigint auto_increment comment '题库id'
         primary key,
-    created_at datetime default CURRENT_TIMESTAMP null comment '创建时间',
-    created_by bigint                             null comment '创建人'
+    created_at   datetime default CURRENT_TIMESTAMP null comment '创建时间',
+    created_by   bigint                             null comment '创建人',
+    is_completed int      default 0                 null comment '是否作答？0未作答 1已作答'
 )
     comment '题库';
 
@@ -17,6 +18,7 @@ create table my_result
     user_id   bigint null comment '答题用户id',
     constraint my_result_bank_bank_id_fk
         foreign key (bank_id) references bank (bank_id)
+            on update cascade on delete cascade
 )
     comment '用户作答表';
 
@@ -31,6 +33,7 @@ create table record
     correct_answer double not null comment '正确答案',
     constraint record_bank_bank_id_fk
         foreign key (bank_id) references bank (bank_id)
+            on update cascade on delete cascade
 )
     comment '做题记录';
 
@@ -44,9 +47,11 @@ create table answer
     is_correct int    not null comment '是否是正确答案？1正确 2错误',
     user_id    bigint null comment '答题用户id',
     constraint answer_bank_bank_id_fk
-        foreign key (bank_id) references bank (bank_id),
+        foreign key (bank_id) references bank (bank_id)
+            on update cascade on delete cascade,
     constraint answer_record_record_id_fk
         foreign key (record_id) references record (record_id)
+            on update cascade on delete cascade
 )
     comment '用户答案';
 
@@ -61,7 +66,8 @@ create table mistake
     mistake_type int    not null comment '错题类型',
     user_id      bigint null comment '错题本用户id',
     constraint mistake_bank_bank_id_fk
-        foreign key (bank_id) references bank (bank_id),
+        foreign key (bank_id) references bank (bank_id)
+            on update cascade on delete cascade,
     constraint mistake_record_record_id_fk
         foreign key (record_id) references record (record_id)
 )
