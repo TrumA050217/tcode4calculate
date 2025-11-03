@@ -47,5 +47,5 @@ springdoc:
 # 微信小程序配置
 wx:
   miniapp:
-    appId: ***REMOVED***  # 小程序微信公众平台appId
-    secret: ***REMOVED***  # 小程序微信公众平台api秘钥
+    appId: xxxxxxxxxxxxxxxxxxx  # 小程序微信公众平台appId
+    secret: xxxxxxxxxxxxxxxxxxxx  # 小程序微信公众平台api秘钥

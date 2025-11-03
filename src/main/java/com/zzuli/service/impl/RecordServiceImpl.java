@@ -225,7 +225,6 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
             Base base = new Base();
             boolean validResult = false;
 
-            // 循环直到生成有效结果
             while (!validResult) {
                 int thisType;
                 if (isMix) {
@@ -239,7 +238,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record>
                 base.setB(random.nextInt(100));
 
                 Double result = execute(base);
-                // 添加除法除数不为零的检查
+                // 除法除数不为零的检查
                 if (result != null && result <= 100 && result >= 0) {
                     validResult = true;
                 }
